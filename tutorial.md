@@ -29,10 +29,16 @@ To properly import our Multipatch data, we will be using two softwares from Esri
 1. Start up ArcMap, in the `File` menu on the toolbar, click `Add data`
 2. In the file navigator, locate the upzipped DoITT model (TIDO)
 3. Once imported successfully, you should be able to see a flattened version of the Manhattan Island.
-4. 
+4.
 
 
 ## 5. Conversion to FBX using Blender
+
+Since VRML format is not directly supported by Unity, we have to further convert the product from the last step to FBX format. There are many possible choices of modeling softwares. In this tutorial, we will use Blender.
+
+1. Open blender and create an empty Scene
+2. Remove the cube in the center, the camera, the light, and the lamp.
+3.
 
 ## 6. importing the model into Unity
 
