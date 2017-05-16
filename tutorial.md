@@ -18,6 +18,7 @@ A complete 3D model of all buildings in New York City are available at Departmen
 
 This model consists of multiple parts divided in to "delivery areas". For the area that contains Columbia University campus, we use delivery area number `13`, which contains the Manhattan Island.
 
+__OPTIONAL__:
 We will also need the building footprints from NYC OpenData's [official website](https://data.cityofnewyork.us/Housing-Development/Building-Footprints/nqwf-w8eh). Once the web page is loaded, click the "Export" button on the top right corner of the Map. Select "Shapefile" as the format. A `.zip` file will be automatically downloaded. Unzip the file to the desired location.
 
 ## 4. Conversion to VRML using ArcGIS
@@ -29,14 +30,15 @@ To properly import our Multipatch data, we will be using two softwares from Esri
 1. Start up ArcMap, in the `File` menu on the toolbar, click `Add data`
 2. In the file navigator, locate the upzipped DoITT model. Select `DA_WISE_Multipatch/DA13_3D_Buildings_Multipatch.gdb/Buildings_3D/Buildings_Multipatch` and click `Add`.
 3. Once imported successfully, you should be able to see a flattened version of the Manhattan Island.
-![island](assets/IMG_2539.PNG)
+![island](assets/IMG_2538.PNG)
 4. Now we select the Area of Interest, campus of Columbia University by using the selection tools.
   - On the toolbar, click `Interactive Selection method` and choose `Select by Polygon`
   - On the view port, zoom into the area of interest, and click through the four corners of the rectangular area of the campus.
   - Now the selected area should appear to be blue
+  - ![select](assets/IMG_2540.PNG)
   - Right click on the `Layers` icon in the `Table of Contents` pane, and click `Data -> Export data`
   - We will export the selected area to Shapefile format, select your desired location and click `OK`.
-![select](assets/IMG_2540.PNG)
+  - ![select](assets/IMG_2539.PNG)
 
 ### Exporting Shapefile data to VRML format
 
@@ -95,9 +97,17 @@ This section is fairly straight-forward. Just drag the `.fbx` file into Unity's 
 One issue with the current coordinate system is that, the numbers are too large, and it seems to be causing problems for intersection calculations. To avoid this:
 
 1. Remember the original center coordinates.
-2. Find the coordinates of the target site on [epsg.io](epsg.io).
+2. Find the coordinates of the target site on [epsg.io](http://epsg.io). Chooese `ESRI: 102718` as the target coordinate system.
 3. Move the model to `(0, 0, 0)`.
 4. Subtract the original center by the target coordinates. This will give you offsets in x, y and z axis. Use that for the camera position.
+
+## Optional steps and Future works
+
+- Initially, I used a small area out of the footprint dataset to select the building models in ArcMap. This will not make any difference. The result will be the same as before.
+- There is a potential benefit, however, because the footprint data is the most up-to-date and contains the most information, including the ground elevation and root heights of the buildings.
+- We discussed the possibility of merging the two `.dbf` files, which is a part of the Shapefile format, containing "attributes" of certain models. This can be easily done using ArcMap's built-in tool. See the [tutorial](http://desktop.arcgis.com/en/arcmap/10.3/manage-data/tables/joining-attributes-in-one-table-to-another.htm) from Esri's official site. In the future, if building information is ever needed, we might be able to merge these data from the footprint model to the DoITT model, and play with it in ArcScene.
+- One drawback of this entire conversion process is that, the building models are not separated, which is Okay for occlusion purposes, but not for specific applications such as retrieving data from a particular building. There may be ways to deal with it if we choose to use a modeling software other than Blender.
+- The accuracy of the heights in the model are largely unknown. By looking at the models overlaid on the real buildings, we confirmed that they are roughly accurate, but due to our lack of knowledge in the coordinate system that DoITT uses, we do not know for sure.
 
 ## References
 
