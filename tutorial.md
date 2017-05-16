@@ -29,20 +29,25 @@ To properly import our Multipatch data, we will be using two softwares from Esri
 1. Start up ArcMap, in the `File` menu on the toolbar, click `Add data`
 2. In the file navigator, locate the upzipped DoITT model. Select `DA_WISE_Multipatch/DA13_3D_Buildings_Multipatch.gdb/Buildings_3D/Buildings_Multipatch` and click `Add`.
 3. Once imported successfully, you should be able to see a flattened version of the Manhattan Island.
+![island](assets/IMG_2539.PNG)
 4. Now we select the Area of Interest, campus of Columbia University by using the selection tools.
   - On the toolbar, click `Interactive Selection method` and choose `Select by Polygon`
   - On the view port, zoom into the area of interest, and click through the four corners of the rectangular area of the campus.
   - Now the selected area should appear to be blue
   - Right click on the `Layers` icon in the `Table of Contents` pane, and click `Data -> Export data`
   - We will export the selected area to Shapefile format, select your desired location and click `OK`.
+![select](assets/IMG_2540.PNG)
 
 ### Exporting Shapefile data to VRML format
 
 1. Start up ArcMap, in the `File` menu on the toolbar, click `Add data`
 2. In the file navigator, select the `.shp` file you created from last section and click `Add`.
 3. Once imported successfully, you will see the 3D model of the Columbia campus
+    - ![select](assets/IMG_2541.PNG)
 4. Now go to `File -> Export scene -> 3D`, make sure you see the following configuration when you click `Options`, and select the output location
+    - ![img](assets/IMG_2542.PNG)
 5. Now ArcScene should have already generated a `.wrl` file at the selected location
+
 
 ## 5. Conversion to FBX using Blender
 
@@ -52,6 +57,7 @@ A prerequisite for this section is one extra plugin for importing X3D/VRML2 file
 1. Go to `File -> User preferences -> Add-ons`
 2. Type `vrml` in the search bar on the right-hand side of the window.
 3. There should be an option called "Import-Eport: Web3D X3D/VRML2 format. Make sure this option is checked.
+  - ![img](assets/IMG_2552.PNG)
 
 After that, we can proceed with the importation:
 
@@ -59,21 +65,32 @@ After that, we can proceed with the importation:
 2. Remove the cube in the center, the camera, the light, and the lamp. By right-clicking on these items and click `delete`.
 3. On the toolbar at the top of the window, click `File -> import -> X3D Extensible 3D (.x3d/.wrl)`
 4. In the file explorer, find the `.wrl` file you exported from the last section. Make sure you have the same options selected on the left pane.
+    - ![img](assets/IMG_2543.PNG)
 5. When you return to the view port, you might not see the model right away, because the original model uses a coordinate system with relatively large values in both longitude and latitude. Move the focus onto the imported mesh by;
   - (1) clicking on `Shape_IndexedFaceSet` on the scene explorer on the right side of the window.
   - (2) on the toolbar at the bottom of the window, click `View -> View Selected`.
+  - ![img](assets/IMG_2545.PNG)
 6. If you still don't see the model, zoom out a little by scrolling down. The default camera is set to 1000 units for the far plane, which is a little to small for our big model. To change this, go to `View -> Properties`. A new pane will be added to the window. In the properties pane, under `View -> Clip`, change `far` to something like `10000` will do it.
+  - ![img](assets/IMG_2544.PNG)
 7. If everything is done properly, you should see the following:
+  - ![img](assets/IMG_2546.PNG)
 
-8. Next, we are going to fix up the geometries in the model. First, enter the Edit mode by either hitting `Tab`, or going to the toolbar below and select `Edit Mode`. 
-9. On the left hand side, go to `Tools` tab and find `Remove` section. Under this section, click the `Remove Doubles` button.
-10. Now that duplicated vertices are removed, we need to recalculate the normals so that they are all facing out. In the same pane, go to the `Shading/UVs` tab, find `Normals` section. 
-11. Click the `Recalculate` button.
-12. Now the model should be ready. Let's export it to FBX format. On the toolbar on the top, go to `File -> export -> FBX`. Choose a desired position for the output file, and hit Export.
+8. We need to set the origin to a point in the original coordinate system, instead of the default one. Go to the pane on the left, under `Tools` tab, there is a drop-down button called `Set Origin`. Choose `Origin to Geometry`.
+  - ![img](assets/IMG_2547.PNG)
+
+9. Next, we are going to fix up the geometries in the model. First, enter the Edit mode by either hitting `Tab`, or going to the toolbar below and select `Edit Mode`.
+  - ![img](assets/IMG_2548.PNG)
+10. On the left hand side, go to `Tools` tab and find `Remove` section. Under this section, click the `Remove Doubles` button.
+  - ![img](assets/IMG_2549.PNG)
+11. Now that duplicated vertices are removed, we need to recalculate the normals so that they are all facing out. In the same pane, go to the `Shading/UVs` tab, find `Normals` section.
+12. Click the `Recalculate` button.
+  - ![img](assets/IMG_2550.PNG)
+13. Now the model should be ready. Let's export it to FBX format. On the toolbar on the top, go to `File -> export -> FBX`. Choose a desired position for the output file, and hit Export.
+  - ![img](assets/IMG_2551.PNG)
 
 ## 6. importing the model into Unity
 
-This section is fairly straight-forward. Just drag the `.fbx` file into Unity's file navigator. To enable collidor, check `generate collidor` in the menu for the `.fbx` file. 
+This section is fairly straight-forward. Just drag the `.fbx` file into Unity's file navigator. To enable collidor, check `generate collidor` in the menu for the `.fbx` file.
 
 One issue with the current coordinate system is that, the numbers are too large, and it seems to be causing problems for intersection calculations. To avoid this:
 
