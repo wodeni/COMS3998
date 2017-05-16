@@ -48,7 +48,12 @@ To properly import our Multipatch data, we will be using two softwares from Esri
 
 Since VRML format is not directly supported by Unity, we have to further convert the product from the last step to FBX format. There are many possible choices of modeling softwares. In this tutorial, we will use Blender.
 
-A prerequisite for this section is one extra plugin for importing X3D/VRML2 files. (TODO)
+A prerequisite for this section is one extra plugin for importing X3D/VRML2 files. The following steps are based on this [youtube video](https://www.youtube.com/watch?v=ZXgLdyCLumI):
+1. Go to `File -> User preferences -> Add-ons`
+2. Type `vrml` in the search bar on the right-hand side of the window.
+3. There should be an option called "Import-Eport: Web3D X3D/VRML2 format. Make sure this option is checked.
+
+After that, we can proceed with the importation:
 
 1. Open blender. It will automatically create an empty scene with a cube at the origin.
 2. Remove the cube in the center, the camera, the light, and the lamp. By right-clicking on these items and click `delete`.
@@ -60,7 +65,22 @@ A prerequisite for this section is one extra plugin for importing X3D/VRML2 file
 6. If you still don't see the model, zoom out a little by scrolling down. The default camera is set to 1000 units for the far plane, which is a little to small for our big model. To change this, go to `View -> Properties`. A new pane will be added to the window. In the properties pane, under `View -> Clip`, change `far` to something like `10000` will do it.
 7. If everything is done properly, you should see the following:
 
+8. Next, we are going to fix up the geometries in the model. First, enter the Edit mode by either hitting `Tab`, or going to the toolbar below and select `Edit Mode`. 
+9. On the left hand side, go to `Tools` tab and find `Remove` section. Under this section, click the `Remove Doubles` button.
+10. Now that duplicated vertices are removed, we need to recalculate the normals so that they are all facing out. In the same pane, go to the `Shading/UVs` tab, find `Normals` section. 
+11. Click the `Recalculate` button.
+12. Now the model should be ready. Let's export it to FBX format. On the toolbar on the top, go to `File -> export -> FBX`. Choose a desired position for the output file, and hit Export.
+
 ## 6. importing the model into Unity
+
+This section is fairly straight-forward. Just drag the `.fbx` file into Unity's file navigator. To enable collidor, check `generate collidor` in the menu for the `.fbx` file. 
+
+One issue with the current coordinate system is that, the numbers are too large, and it seems to be causing problems for intersection calculations. To avoid this:
+
+1. Remember the original center coordinates.
+2. Find the coordinates of the target site on [epsg.io](epsg.io).
+3. Move the model to `(0, 0, 0)`.
+4. Subtract the original center by the target coordinates. This will give you offsets in x, y and z axis. Use that for the camera position.
 
 ## References
 
